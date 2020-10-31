@@ -12,6 +12,14 @@
 		AFC70F38254E0A1600EA0C89 /* Remaindzzers.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AFC70F36254E0A1600EA0C89 /* Remaindzzers.xcdatamodeld */; };
 		AFC70F3A254E0A3300EA0C89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AFC70F39254E0A3300EA0C89 /* Assets.xcassets */; };
 		AFC70F3D254E0A3300EA0C89 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFC70F3B254E0A3300EA0C89 /* LaunchScreen.storyboard */; };
+		AFC70F4C254E0EB600EA0C89 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC70F49254E0EB500EA0C89 /* Theme.swift */; };
+		AFC70F4D254E0EB600EA0C89 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC70F4A254E0EB500EA0C89 /* ThemeManager.swift */; };
+		AFC70F4E254E0EB600EA0C89 /* Themed.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC70F4B254E0EB600EA0C89 /* Themed.swift */; };
+		AFC70F50254E0EC400EA0C89 /* Weak.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC70F4F254E0EC400EA0C89 /* Weak.swift */; };
+		AFC70F52254E0EEE00EA0C89 /* UIColor-extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC70F51254E0EEE00EA0C89 /* UIColor-extension.swift */; };
+		AFC70F54254E0EFB00EA0C89 /* UIView-extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC70F53254E0EFA00EA0C89 /* UIView-extension.swift */; };
+		AFC70F57254E101500EA0C89 /* RNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC70F56254E101500EA0C89 /* RNavigationController.swift */; };
+		AFC70F59254E104800EA0C89 /* RemainderTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC70F58254E104800EA0C89 /* RemainderTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +30,14 @@
 		AFC70F39254E0A3300EA0C89 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AFC70F3C254E0A3300EA0C89 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AFC70F3E254E0A3300EA0C89 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AFC70F49254E0EB500EA0C89 /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		AFC70F4A254E0EB500EA0C89 /* ThemeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
+		AFC70F4B254E0EB600EA0C89 /* Themed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Themed.swift; sourceTree = "<group>"; };
+		AFC70F4F254E0EC400EA0C89 /* Weak.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Weak.swift; sourceTree = "<group>"; };
+		AFC70F51254E0EEE00EA0C89 /* UIColor-extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor-extension.swift"; sourceTree = "<group>"; };
+		AFC70F53254E0EFA00EA0C89 /* UIView-extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView-extension.swift"; sourceTree = "<group>"; };
+		AFC70F56254E101500EA0C89 /* RNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNavigationController.swift; sourceTree = "<group>"; };
+		AFC70F58254E104800EA0C89 /* RemainderTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainderTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,12 +72,68 @@
 			children = (
 				AFC70F2D254E0A1600EA0C89 /* AppDelegate.swift */,
 				AFC70F2F254E0A1600EA0C89 /* SceneDelegate.swift */,
+				AFC70F46254E0DAF00EA0C89 /* controller */,
+				AFC70F45254E0DA500EA0C89 /* view */,
+				AFC70F44254E0D9900EA0C89 /* model */,
+				AFC70F48254E0E9600EA0C89 /* theme */,
+				AFC70F55254E0F0100EA0C89 /* extension */,
+				AFC70F47254E0DC700EA0C89 /* helper */,
+			);
+			path = Remaindzzers;
+			sourceTree = "<group>";
+		};
+		AFC70F44254E0D9900EA0C89 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				AFC70F4F254E0EC400EA0C89 /* Weak.swift */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		AFC70F45254E0DA500EA0C89 /* view */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		AFC70F46254E0DAF00EA0C89 /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				AFC70F56254E101500EA0C89 /* RNavigationController.swift */,
+				AFC70F58254E104800EA0C89 /* RemainderTableViewController.swift */,
+			);
+			path = controller;
+			sourceTree = "<group>";
+		};
+		AFC70F47254E0DC700EA0C89 /* helper */ = {
+			isa = PBXGroup;
+			children = (
 				AFC70F39254E0A3300EA0C89 /* Assets.xcassets */,
 				AFC70F3B254E0A3300EA0C89 /* LaunchScreen.storyboard */,
 				AFC70F3E254E0A3300EA0C89 /* Info.plist */,
 				AFC70F36254E0A1600EA0C89 /* Remaindzzers.xcdatamodeld */,
 			);
-			path = Remaindzzers;
+			path = helper;
+			sourceTree = "<group>";
+		};
+		AFC70F48254E0E9600EA0C89 /* theme */ = {
+			isa = PBXGroup;
+			children = (
+				AFC70F49254E0EB500EA0C89 /* Theme.swift */,
+				AFC70F4B254E0EB600EA0C89 /* Themed.swift */,
+				AFC70F4A254E0EB500EA0C89 /* ThemeManager.swift */,
+			);
+			path = theme;
+			sourceTree = "<group>";
+		};
+		AFC70F55254E0F0100EA0C89 /* extension */ = {
+			isa = PBXGroup;
+			children = (
+				AFC70F51254E0EEE00EA0C89 /* UIColor-extension.swift */,
+				AFC70F53254E0EFA00EA0C89 /* UIView-extension.swift */,
+			);
+			path = extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -135,8 +207,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				AFC70F2E254E0A1600EA0C89 /* AppDelegate.swift in Sources */,
+				AFC70F54254E0EFB00EA0C89 /* UIView-extension.swift in Sources */,
+				AFC70F52254E0EEE00EA0C89 /* UIColor-extension.swift in Sources */,
+				AFC70F4C254E0EB600EA0C89 /* Theme.swift in Sources */,
+				AFC70F4D254E0EB600EA0C89 /* ThemeManager.swift in Sources */,
 				AFC70F30254E0A1600EA0C89 /* SceneDelegate.swift in Sources */,
+				AFC70F4E254E0EB600EA0C89 /* Themed.swift in Sources */,
 				AFC70F38254E0A1600EA0C89 /* Remaindzzers.xcdatamodeld in Sources */,
+				AFC70F50254E0EC400EA0C89 /* Weak.swift in Sources */,
+				AFC70F59254E104800EA0C89 /* RemainderTableViewController.swift in Sources */,
+				AFC70F57254E101500EA0C89 /* RNavigationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,7 +354,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6D677EY6CV;
-				INFOPLIST_FILE = Remaindzzers/Info.plist;
+				INFOPLIST_FILE = Remaindzzers/helper/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -293,7 +373,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6D677EY6CV;
-				INFOPLIST_FILE = Remaindzzers/Info.plist;
+				INFOPLIST_FILE = Remaindzzers/helper/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

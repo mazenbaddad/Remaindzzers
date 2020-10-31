@@ -17,12 +17,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         window = UIWindow(frame:UIScreen.main.bounds)
-//        window?.makeKeyAndVisible()
+        window?.makeKeyAndVisible()
         if #available(iOS 13.0, *) { return true }
         
         // if it's lower than IOS 13.0
-
-//        window?.rootViewController = ViewController()
+        let remainderTableViewController = RemainderTableViewController(style: .plain)
+        let navigationRemainderTableViewController = RNavigationController(rootViewController: remainderTableViewController)
+        window?.rootViewController = navigationRemainderTableViewController
+        window?.rootViewController = navigationRemainderTableViewController
         return true
     }
 

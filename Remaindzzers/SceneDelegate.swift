@@ -21,9 +21,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-
-//        window?.rootViewController = ViewController()
-//        window?.makeKeyAndVisible()
+        
+        let remainderTableViewController = RemainderTableViewController(style: .plain)
+        let navigationRemainderTableViewController = RNavigationController(rootViewController: remainderTableViewController)
+        window?.rootViewController = navigationRemainderTableViewController
+        window?.makeKeyAndVisible()
     }
 
     @available(iOS 13.0, *)
