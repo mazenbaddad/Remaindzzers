@@ -32,10 +32,9 @@ class RemainderTableViewController : UITableViewController {
     }
     
     @objc func addRemainder() {
-        // testing
-        let remainder = Remainder(title: "Stuff for someone", description: "description of what the remainder for", coordinates: Coordinates(latitude: 0, longitude: 0), timestamp: NSDate().timeIntervalSince1970, category: .custom)
-        self.remainders[.custom] = [(remainder , false)]
-        self.tableView.reloadData()
+        let remainderView = RemainderView()
+        remainderView.delegate = self
+        remainderView.present()
     }
     
     required init?(coder: NSCoder) {
@@ -104,6 +103,18 @@ extension RemainderTableViewController {
     }
     
      
+}
+
+extension RemainderTableViewController : RemainderViewDelegate {
+    func remainderView(_ remainderView: RemainderView, didAddRemainder remainder: Remainder) {
+        if self.remainders[remainder.category] != nil {
+            self.remainders[remainder.category]?.append((remainder , false))
+        }else {
+            self.remainders[remainder.category] = [(remainder , false)]
+        }
+        remainderView.removeFromSuperview()
+        self.tableView.reloadData()
+    }
 }
 
 //MARK:- Themed

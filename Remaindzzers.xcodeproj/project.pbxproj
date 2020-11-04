@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AF600DB425508ABB0037403E /* RemainderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF600DB325508ABB0037403E /* RemainderView.swift */; };
 		AFC70F2E254E0A1600EA0C89 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC70F2D254E0A1600EA0C89 /* AppDelegate.swift */; };
 		AFC70F30254E0A1600EA0C89 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC70F2F254E0A1600EA0C89 /* SceneDelegate.swift */; };
 		AFC70F38254E0A1600EA0C89 /* Remaindzzers.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AFC70F36254E0A1600EA0C89 /* Remaindzzers.xcdatamodeld */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AF600DB325508ABB0037403E /* RemainderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainderView.swift; sourceTree = "<group>"; };
 		AFC70F2A254E0A1600EA0C89 /* Remaindzzers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Remaindzzers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFC70F2D254E0A1600EA0C89 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AFC70F2F254E0A1600EA0C89 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				AFC70F5A254E155F00EA0C89 /* RemainderTableViewCell.swift */,
+				AF600DB325508ABB0037403E /* RemainderView.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -229,6 +232,7 @@
 				AFC70F4C254E0EB600EA0C89 /* Theme.swift in Sources */,
 				AFC70F4D254E0EB600EA0C89 /* ThemeManager.swift in Sources */,
 				AFC70F63254F617800EA0C89 /* RemainderCategory.swift in Sources */,
+				AF600DB425508ABB0037403E /* RemainderView.swift in Sources */,
 				AFC70F30254E0A1600EA0C89 /* SceneDelegate.swift in Sources */,
 				AFC70F4E254E0EB600EA0C89 /* Themed.swift in Sources */,
 				AFC70F38254E0A1600EA0C89 /* Remaindzzers.xcdatamodeld in Sources */,
