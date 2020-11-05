@@ -9,13 +9,13 @@
 import UIKit
 
 protocol RemainderViewDelegate : class {
-    func remainderView(_ remainderView : RemainderView , didAddRemainder remainder : Remainder)
+    func remainderView(_ remainderView : RemainderView , didAddRemainder remainder : RemainderView.Remainder)
 }
 
 
 class RemainderView : UIView {
     
-    
+    typealias Remainder = (title : String , description : String? , timestamp : Double , Category : Int16 , coordinates : Coordinates)
     weak var delegate : RemainderViewDelegate?
     
     var containerViewHeightConstraint : NSLayoutConstraint?
@@ -183,7 +183,8 @@ class RemainderView : UIView {
         if !validTitle.isEmpty {
             let description : String? = !self.descriptionTextView.text.isEmpty ? self.descriptionTextView.text : nil
             let timestamp = NSDate().timeIntervalSince1970
-            let remainder = Remainder(title: validTitle, description: description, coordinates: Coordinates(latitude: 9, longitude: 9), timestamp: timestamp, category: .custom)
+            let coordinates = Coordinates(latitude : 0 ,longitude : 0)
+            let remainder : RemainderView.Remainder = (validTitle , description, timestamp , RemainderCategory.custom.rawValue , coordinates)
             self.delegate?.remainderView(self, didAddRemainder: remainder)
         }else {
             shakeView(titleLabel)

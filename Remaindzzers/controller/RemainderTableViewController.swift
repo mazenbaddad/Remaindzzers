@@ -12,7 +12,9 @@ class RemainderTableViewController : UITableViewController {
     
     typealias ExpandableRemainder = (remainder :Remainder , expanded :Bool)
     
-    var remainders : Dictionary<RemainderCategory,Array<ExpandableRemainder>> = [:]
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
+    var remainders : Dictionary<RemainderCategory.RawValue,Array<ExpandableRemainder>> = [:]
     
     override init(style: UITableView.Style) {
         super.init(style: style)
@@ -24,6 +26,8 @@ class RemainderTableViewController : UITableViewController {
     fileprivate func setupTableView() {
         tableView.separatorStyle = .none
         tableView.register(RemainderTableViewCell.self, forCellReuseIdentifier: RemainderTableViewCell.cellID)
+        
+        fetchRemainders()
     }
     
     fileprivate func setupNavigationITem() {
@@ -35,6 +39,28 @@ class RemainderTableViewController : UITableViewController {
         let remainderView = RemainderView()
         remainderView.delegate = self
         remainderView.present()
+    }
+    
+    func fetchRemainders() {
+        do {
+            let remainders = try self.context.fetch(Remainder.fetchRequest()) as [Remainder]
+            for remainder in remainders {
+                append(remainder: remainder)
+            }
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }catch {
+            print(error)
+        }
+    }
+    
+    func append(remainder : Remainder) {
+        if self.remainders[remainder.category] != nil {
+            self.remainders[remainder.category]?.append((remainder,false))
+        }else {
+            self.remainders[remainder.category] = [(remainder,false)]
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -85,7 +111,7 @@ extension RemainderTableViewController {
         
         cell.timestampLabel.text = dateFormatter.string(from: date as Date)
         
-        if expandableRemainder.expanded , let description  = expandableRemainder.remainder.description{
+        if expandableRemainder.expanded , let description  = expandableRemainder.remainder.remainderDescription{
             cell.detailTextLabel?.text = description
             cell.detailTextLabel?.numberOfLines = 0
             cell.detailTextLabel?.font = UIFont.systemFont(ofSize: UIFont.systemFontSize)
@@ -106,14 +132,28 @@ extension RemainderTableViewController {
 }
 
 extension RemainderTableViewController : RemainderViewDelegate {
-    func remainderView(_ remainderView: RemainderView, didAddRemainder remainder: Remainder) {
-        if self.remainders[remainder.category] != nil {
-            self.remainders[remainder.category]?.append((remainder , false))
-        }else {
-            self.remainders[remainder.category] = [(remainder , false)]
-        }
+    
+    func remainderView(_ remainderView: RemainderView, didAddRemainder remainder: RemainderView.Remainder) {
+        let cdRemainder = Remainder(context: self.context)
+        cdRemainder.title = remainder.title
+        cdRemainder.remainderDescription = remainder.description
+        cdRemainder.category = remainder.Category
+        cdRemainder.timestamp = remainder.timestamp
+        cdRemainder.latitude = remainder.coordinates.latitude
+        cdRemainder.longitude = remainder.coordinates.longitude
+        
         remainderView.removeFromSuperview()
-        self.tableView.reloadData()
+        
+        do {
+            try self.context.save()
+            self.append(remainder: cdRemainder)
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }catch {
+            print(error)
+        }
+        
     }
 }
 

@@ -24,8 +24,9 @@
 		AFC70F5B254E155F00EA0C89 /* RemainderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC70F5A254E155F00EA0C89 /* RemainderTableViewCell.swift */; };
 		AFC70F5D254E37EB00EA0C89 /* String-extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC70F5C254E37EA00EA0C89 /* String-extension.swift */; };
 		AFC70F5F254F56BB00EA0C89 /* Coordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC70F5E254F56BB00EA0C89 /* Coordinates.swift */; };
-		AFC70F61254F56F800EA0C89 /* Remainder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC70F60254F56F800EA0C89 /* Remainder.swift */; };
 		AFC70F63254F617800EA0C89 /* RemainderCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC70F62254F617800EA0C89 /* RemainderCategory.swift */; };
+		AFFFE5592553884700F7391D /* Remainder+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFFFE5572553884700F7391D /* Remainder+CoreDataClass.swift */; };
+		AFFFE55A2553884700F7391D /* Remainder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFFFE5582553884700F7391D /* Remainder+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,8 +49,9 @@
 		AFC70F5A254E155F00EA0C89 /* RemainderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainderTableViewCell.swift; sourceTree = "<group>"; };
 		AFC70F5C254E37EA00EA0C89 /* String-extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String-extension.swift"; sourceTree = "<group>"; };
 		AFC70F5E254F56BB00EA0C89 /* Coordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinates.swift; sourceTree = "<group>"; };
-		AFC70F60254F56F800EA0C89 /* Remainder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Remainder.swift; sourceTree = "<group>"; };
 		AFC70F62254F617800EA0C89 /* RemainderCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainderCategory.swift; sourceTree = "<group>"; };
+		AFFFE5572553884700F7391D /* Remainder+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Remainder+CoreDataClass.swift"; sourceTree = "<group>"; };
+		AFFFE5582553884700F7391D /* Remainder+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Remainder+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,9 +99,10 @@
 		AFC70F44254E0D9900EA0C89 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				AFFFE5572553884700F7391D /* Remainder+CoreDataClass.swift */,
+				AFFFE5582553884700F7391D /* Remainder+CoreDataProperties.swift */,
 				AFC70F4F254E0EC400EA0C89 /* Weak.swift */,
 				AFC70F5E254F56BB00EA0C89 /* Coordinates.swift */,
-				AFC70F60254F56F800EA0C89 /* Remainder.swift */,
 				AFC70F62254F617800EA0C89 /* RemainderCategory.swift */,
 			);
 			path = model;
@@ -225,9 +228,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				AFC70F2E254E0A1600EA0C89 /* AppDelegate.swift in Sources */,
-				AFC70F61254F56F800EA0C89 /* Remainder.swift in Sources */,
 				AFC70F54254E0EFB00EA0C89 /* UIView-extension.swift in Sources */,
 				AFC70F5D254E37EB00EA0C89 /* String-extension.swift in Sources */,
+				AFFFE5592553884700F7391D /* Remainder+CoreDataClass.swift in Sources */,
 				AFC70F52254E0EEE00EA0C89 /* UIColor-extension.swift in Sources */,
 				AFC70F4C254E0EB600EA0C89 /* Theme.swift in Sources */,
 				AFC70F4D254E0EB600EA0C89 /* ThemeManager.swift in Sources */,
@@ -241,6 +244,7 @@
 				AFC70F5B254E155F00EA0C89 /* RemainderTableViewCell.swift in Sources */,
 				AFC70F59254E104800EA0C89 /* RemainderTableViewController.swift in Sources */,
 				AFC70F57254E101500EA0C89 /* RNavigationController.swift in Sources */,
+				AFFFE55A2553884700F7391D /* Remainder+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
