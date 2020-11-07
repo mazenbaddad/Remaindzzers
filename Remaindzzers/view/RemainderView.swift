@@ -18,6 +18,11 @@ class RemainderView : UIView {
     typealias Remainder = (title : String , description : String? , timestamp : Double , Category : Int16 , coordinates : Coordinates)
     weak var delegate : RemainderViewDelegate?
     
+    var categoriesNames : Array<String> = []
+    
+    var selectedCetagory : Int = 0
+    
+    
     var containerViewHeightConstraint : NSLayoutConstraint?
     var containerView : UIView = {
         let view = UIView()
@@ -86,10 +91,23 @@ class RemainderView : UIView {
         return button
     }()
     
+    var cetagoryLabel : UILabel = {
+        let label = UILabel()
+        label.text = "Pick a Cetagory"
+        label.font = UIFont.systemFont(ofSize: UIFont.labelFontSize)
+        return label
+    }()
+    
+    var cetagoryPickerView : UIPickerView = {
+        let pickerView = UIPickerView()
+        return pickerView
+    }()
+    
     
     override init(frame: CGRect) {
         super.init(frame:frame)
         setupViews()
+        setupCategories()
         setupTheme()
     }
     
@@ -106,6 +124,8 @@ class RemainderView : UIView {
         
         
         descriptionTextView.delegate = self
+        cetagoryPickerView.delegate = self
+        cetagoryPickerView.dataSource = self
         
         // containerView constraints
         containerView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
@@ -123,6 +143,8 @@ class RemainderView : UIView {
         self.containerView.addSubview(titleTextField)
         self.containerView.addSubview(descriptionLabel)
         self.containerView.addSubview(descriptionTextView)
+        self.containerView.addSubview(cetagoryLabel)
+        self.containerView.addSubview(cetagoryPickerView)
         
         self.containerView.addSubview(cancelButton)
         self.containerView.addSubview(addButton)
@@ -146,6 +168,22 @@ class RemainderView : UIView {
         cancelButton.setConstraints(containerView.leadingAnchor, 0, nil, 40 , containerView.centerXAnchor,0 , containerView.bottomAnchor ,0)
         addButton.setConstraints(containerView.centerXAnchor, 0, nil, 40,containerView.trailingAnchor,0 , containerView.bottomAnchor,0)
         
+        cetagoryLabel.setConstraints(containerView.leadingAnchor, 10, descriptionTextView.bottomAnchor, 10)
+        cetagoryPickerView.setConstraints(containerView.leadingAnchor, 10, cetagoryLabel.bottomAnchor, 5 , containerView.trailingAnchor , -10 , nil , 70)
+    }
+    
+    func setupCategories() {
+        self.categoriesNames = ["Pharmacy","Grocery","Bakery" ,"Butchery" ,"FreshStore","PlanetShop"]
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        do {
+            let customCategories = try context.fetch(CustomCategory.fetchRequest()) as [CustomCategory]
+            for category in customCategories where category.name != nil{
+                self.categoriesNames.append(category.name!)
+            }
+        }catch {
+            print(error)
+        }
+        cetagoryPickerView.reloadAllComponents()
     }
     
     func present() {
@@ -166,10 +204,13 @@ class RemainderView : UIView {
         let descriptionLabelHeight = descriptionLabel.text!.size(withMaximumWidth: containerWidth, font: descriptionLabel.font!).height
         let descriptionTextViewHeight = descriptionTextView.text.size(withMaximumWidth: containerWidth - 30, font: descriptionTextView.font!).height + 10
         
-        let buttonsHeight : CGFloat = 40
-        let spaces : CGFloat = 70
+        let cetagoryLabelHeight = cetagoryLabel.text!.size(withMaximumWidth: containerWidth, font: cetagoryLabel.font).height
+        let pickerViewHeight : CGFloat = 70
         
-        let newHeight = addRemainderTitleHeight + titleLabelHeight + titleTextFieldHeight + descriptionLabelHeight + descriptionTextViewHeight + buttonsHeight + spaces
+        let buttonsHeight : CGFloat = 40
+        let spaces : CGFloat = 80
+        
+        let newHeight = addRemainderTitleHeight + titleLabelHeight + titleTextFieldHeight + descriptionLabelHeight + descriptionTextViewHeight + buttonsHeight + spaces + cetagoryLabelHeight + pickerViewHeight
         return newHeight
     }
     
@@ -184,7 +225,7 @@ class RemainderView : UIView {
             let description : String? = !self.descriptionTextView.text.isEmpty ? self.descriptionTextView.text : nil
             let timestamp = NSDate().timeIntervalSince1970
             let coordinates = Coordinates(latitude : 0 ,longitude : 0)
-            let remainder : RemainderView.Remainder = (validTitle , description, timestamp , RemainderCategory.custom.rawValue , coordinates)
+            let remainder : RemainderView.Remainder = (validTitle , description, timestamp , Int16(self.selectedCetagory) , coordinates)
             self.delegate?.remainderView(self, didAddRemainder: remainder)
         }else {
             shakeView(titleLabel)
@@ -228,6 +269,26 @@ extension RemainderView : UITextViewDelegate {
     
 }
 
+extension RemainderView : UIPickerViewDelegate , UIPickerViewDataSource {
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return self.categoriesNames.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return self.categoriesNames[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.selectedCetagory = row
+    }
+    
+}
+
 //MARK:- Themed
 
 extension RemainderView : Themed {
@@ -239,6 +300,8 @@ extension RemainderView : Themed {
         self.titleTextField.textColor = theme.labelColor
         self.descriptionLabel.textColor = theme.labelColor
         self.descriptionTextView.textColor = theme.labelColor
+        self.cetagoryLabel.textColor = theme.labelColor
+        self.cetagoryPickerView.tintColor = theme.labelColor
         
         addButton.setTitleColor(theme.appTintColor, for: .normal)
         cancelButton.setTitleColor(theme.appTintColor, for: .normal)

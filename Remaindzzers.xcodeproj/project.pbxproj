@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AF359B2C25563A0B0054C843 /* CustomCategory+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF359B2A25563A0B0054C843 /* CustomCategory+CoreDataClass.swift */; };
+		AF359B2D25563A0B0054C843 /* CustomCategory+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF359B2B25563A0B0054C843 /* CustomCategory+CoreDataProperties.swift */; };
 		AF600DB425508ABB0037403E /* RemainderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF600DB325508ABB0037403E /* RemainderView.swift */; };
 		AFC70F2E254E0A1600EA0C89 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC70F2D254E0A1600EA0C89 /* AppDelegate.swift */; };
 		AFC70F30254E0A1600EA0C89 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC70F2F254E0A1600EA0C89 /* SceneDelegate.swift */; };
@@ -30,6 +32,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AF359B2A25563A0B0054C843 /* CustomCategory+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomCategory+CoreDataClass.swift"; sourceTree = "<group>"; };
+		AF359B2B25563A0B0054C843 /* CustomCategory+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomCategory+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		AF600DB325508ABB0037403E /* RemainderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainderView.swift; sourceTree = "<group>"; };
 		AFC70F2A254E0A1600EA0C89 /* Remaindzzers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Remaindzzers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFC70F2D254E0A1600EA0C89 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -101,6 +105,8 @@
 			children = (
 				AFFFE5572553884700F7391D /* Remainder+CoreDataClass.swift */,
 				AFFFE5582553884700F7391D /* Remainder+CoreDataProperties.swift */,
+				AF359B2A25563A0B0054C843 /* CustomCategory+CoreDataClass.swift */,
+				AF359B2B25563A0B0054C843 /* CustomCategory+CoreDataProperties.swift */,
 				AFC70F4F254E0EC400EA0C89 /* Weak.swift */,
 				AFC70F5E254F56BB00EA0C89 /* Coordinates.swift */,
 				AFC70F62254F617800EA0C89 /* RemainderCategory.swift */,
@@ -240,10 +246,12 @@
 				AFC70F4E254E0EB600EA0C89 /* Themed.swift in Sources */,
 				AFC70F38254E0A1600EA0C89 /* Remaindzzers.xcdatamodeld in Sources */,
 				AFC70F5F254F56BB00EA0C89 /* Coordinates.swift in Sources */,
+				AF359B2C25563A0B0054C843 /* CustomCategory+CoreDataClass.swift in Sources */,
 				AFC70F50254E0EC400EA0C89 /* Weak.swift in Sources */,
 				AFC70F5B254E155F00EA0C89 /* RemainderTableViewCell.swift in Sources */,
 				AFC70F59254E104800EA0C89 /* RemainderTableViewController.swift in Sources */,
 				AFC70F57254E101500EA0C89 /* RNavigationController.swift in Sources */,
+				AF359B2D25563A0B0054C843 /* CustomCategory+CoreDataProperties.swift in Sources */,
 				AFFFE55A2553884700F7391D /* Remainder+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
