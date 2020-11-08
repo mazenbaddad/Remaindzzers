@@ -33,12 +33,17 @@ class RemainderTableViewController : UITableViewController {
     fileprivate func setupNavigationITem() {
         navigationItem.title = "Remaindzzers"
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addRemainder))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Map", style: .done, target: self, action: #selector(mapTapped))
     }
     
     @objc func addRemainder() {
-        let remainderView = RemainderView()
-        remainderView.delegate = self
-        remainderView.present()
+        let remainderAlertView = RemainderAlertView()
+        remainderAlertView.delegate = self
+        remainderAlertView.present()
+    }
+    
+    @objc func mapTapped() {
+        present(MapViewController(), animated: true)
     }
     
     func fetchRemainders() {
@@ -131,30 +136,41 @@ extension RemainderTableViewController {
      
 }
 
-extension RemainderTableViewController : RemainderViewDelegate {
+//MARK:- AlertView Delegate
+
+extension RemainderTableViewController : AlertViewDelegate {
     
-    func remainderView(_ remainderView: RemainderView, didAddRemainder remainder: RemainderView.Remainder) {
-        let cdRemainder = Remainder(context: self.context)
-        cdRemainder.title = remainder.title
-        cdRemainder.remainderDescription = remainder.description
-        cdRemainder.category = remainder.Category
-        cdRemainder.timestamp = remainder.timestamp
-        cdRemainder.latitude = remainder.coordinates.latitude
-        cdRemainder.longitude = remainder.coordinates.longitude
-        
-        remainderView.removeFromSuperview()
-        
-        do {
-            try self.context.save()
-            self.append(remainder: cdRemainder)
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
+    func alertView(_ alertView: AlertView, didAdd alertInfo: Dictionary<String, Any>) {
+        let alertView = alertView as! RemainderAlertView
+        if let title = alertInfo[alertView.titleAlertKey] as? String,
+            let catagory = alertInfo[alertView.categoryAlertKey] as? Int16 ,
+            let timestamp = alertInfo[alertView.timestampAlertKey] as? Double ,
+            let latitude = alertInfo[alertView.latitudeAlertKey] as? Double ,
+            let longitude = alertInfo[alertView.longitudeAlertKey] as? Double{
+            
+            
+            let description = alertInfo[alertView.descriptionAlertKey] as? String
+            let remainder = Remainder(context: self.context)
+            remainder.title = title
+            remainder.remainderDescription = description
+            remainder.category = catagory
+            remainder.timestamp = timestamp
+            remainder.latitude = latitude
+            remainder.longitude = longitude
+            
+            do {
+                try self.context.save()
+                self.append(remainder: remainder)
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }catch {
+                print(error)
             }
-        }catch {
-            print(error)
         }
-        
+        alertView.removeFromSuperview()
     }
+    
 }
 
 //MARK:- Themed

@@ -2,7 +2,7 @@
 //  CustomCategory+CoreDataProperties.swift
 //  Remaindzzers
 //
-//  Created by mazen baddad on 11/7/20.
+//  Created by mazen baddad on 11/8/20.
 //  Copyright © 2020 mazen baddad. All rights reserved.
 //
 //
@@ -17,8 +17,9 @@ extension CustomCategory {
         return NSFetchRequest<CustomCategory>(entityName: "CustomCategory")
     }
 
-    @NSManaged public var name: String?
+    @NSManaged public var title: String?
     @NSManaged public var latitude: Double
     @NSManaged public var longitude: Double
+    @NSManaged public var subtitile: String?
 
 }

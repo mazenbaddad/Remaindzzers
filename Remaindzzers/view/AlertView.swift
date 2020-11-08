@@ -1,27 +1,23 @@
 //
-//  RemainderView.swift
+//  AlertView.swift
 //  Remaindzzers
 //
-//  Created by mazen baddad on 11/2/20.
+//  Created by mazen baddad on 11/8/20.
 //  Copyright © 2020 mazen baddad. All rights reserved.
 //
 
 import UIKit
 
-protocol RemainderViewDelegate : class {
-    func remainderView(_ remainderView : RemainderView , didAddRemainder remainder : RemainderView.Remainder)
+protocol AlertViewDelegate : class {
+    func alertView(_ alertView : AlertView , didAdd alertInfo : Dictionary<String,Any>)
 }
 
-
-class RemainderView : UIView {
+class AlertView : UIView , Themed , UITextViewDelegate{
     
-    typealias Remainder = (title : String , description : String? , timestamp : Double , Category : Int16 , coordinates : Coordinates)
-    weak var delegate : RemainderViewDelegate?
+    let titleAlertKey : String = "titleAlertKey"
+    let descriptionAlertKey : String = "descriptionAlertKey"
     
-    var categoriesNames : Array<String> = []
-    
-    var selectedCetagory : Int = 0
-    
+    weak var delegate : AlertViewDelegate?
     
     var containerViewHeightConstraint : NSLayoutConstraint?
     var containerView : UIView = {
@@ -32,17 +28,15 @@ class RemainderView : UIView {
         return view
     }()
     
-    var addRemainderTitleLabel : UILabel = {
+    var topTitleLabel : UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: UIFont.labelFontSize + 3)
-        label.text = "Add remainder"
         label.textAlignment = .center
         return label
     }()
     
     var titleLabel : UILabel = {
         let label = UILabel()
-        label.text = "Remainder title"
         label.font = UIFont.systemFont(ofSize: UIFont.labelFontSize)
         return label
     }()
@@ -59,7 +53,6 @@ class RemainderView : UIView {
     
     var descriptionLabel : UILabel = {
         let label = UILabel()
-        label.text = "Remainder description"
         label.font = UIFont.systemFont(ofSize: UIFont.labelFontSize)
         return label
     }()
@@ -91,23 +84,9 @@ class RemainderView : UIView {
         return button
     }()
     
-    var cetagoryLabel : UILabel = {
-        let label = UILabel()
-        label.text = "Pick a Cetagory"
-        label.font = UIFont.systemFont(ofSize: UIFont.labelFontSize)
-        return label
-    }()
-    
-    var cetagoryPickerView : UIPickerView = {
-        let pickerView = UIPickerView()
-        return pickerView
-    }()
-    
-    
     override init(frame: CGRect) {
         super.init(frame:frame)
         setupViews()
-        setupCategories()
         setupTheme()
     }
     
@@ -115,7 +94,7 @@ class RemainderView : UIView {
         self.endEditing(true)
     }
     
-    fileprivate func setupViews() {
+    func setupViews() {
         self.backgroundColor = UIColor.black.withAlphaComponent(0.2)
         self.addSubview(containerView)
         
@@ -124,8 +103,6 @@ class RemainderView : UIView {
         
         
         descriptionTextView.delegate = self
-        cetagoryPickerView.delegate = self
-        cetagoryPickerView.dataSource = self
         
         // containerView constraints
         containerView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
@@ -138,22 +115,20 @@ class RemainderView : UIView {
         containerViewHeightConstraint?.isActive = true
         
         // add views to container view
-        self.containerView.addSubview(addRemainderTitleLabel)
+        self.containerView.addSubview(topTitleLabel)
         self.containerView.addSubview(titleLabel)
         self.containerView.addSubview(titleTextField)
         self.containerView.addSubview(descriptionLabel)
         self.containerView.addSubview(descriptionTextView)
-        self.containerView.addSubview(cetagoryLabel)
-        self.containerView.addSubview(cetagoryPickerView)
         
         self.containerView.addSubview(cancelButton)
         self.containerView.addSubview(addButton)
         
         // constraint container subviews
         
-        addRemainderTitleLabel.setConstraints(containerView.leadingAnchor, 10, containerView.topAnchor, 10 , containerView.trailingAnchor , -10)
+        topTitleLabel.setConstraints(containerView.leadingAnchor, 10, containerView.topAnchor, 10 , containerView.trailingAnchor , -10)
         
-        titleLabel.setConstraints(containerView.leadingAnchor, 10, addRemainderTitleLabel.bottomAnchor, 20)
+        titleLabel.setConstraints(containerView.leadingAnchor, 10, topTitleLabel.bottomAnchor, 20)
         let textFieldHeight = "".size(withMaximumWidth: containerView.frame.width-20, font: titleTextField.font!).height + 10
         titleTextField.setConstraints(containerView.leadingAnchor, 10, titleLabel.bottomAnchor, 5, containerView.trailingAnchor , -10 , nil , textFieldHeight)
 
@@ -167,23 +142,6 @@ class RemainderView : UIView {
 
         cancelButton.setConstraints(containerView.leadingAnchor, 0, nil, 40 , containerView.centerXAnchor,0 , containerView.bottomAnchor ,0)
         addButton.setConstraints(containerView.centerXAnchor, 0, nil, 40,containerView.trailingAnchor,0 , containerView.bottomAnchor,0)
-        
-        cetagoryLabel.setConstraints(containerView.leadingAnchor, 10, descriptionTextView.bottomAnchor, 10)
-        cetagoryPickerView.setConstraints(containerView.leadingAnchor, 10, cetagoryLabel.bottomAnchor, 5 , containerView.trailingAnchor , -10 , nil , 70)
-    }
-    
-    func setupCategories() {
-        self.categoriesNames = ["Pharmacy","Grocery","Bakery" ,"Butchery" ,"FreshStore","PlanetShop"]
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        do {
-            let customCategories = try context.fetch(CustomCategory.fetchRequest()) as [CustomCategory]
-            for category in customCategories where category.name != nil{
-                self.categoriesNames.append(category.name!)
-            }
-        }catch {
-            print(error)
-        }
-        cetagoryPickerView.reloadAllComponents()
     }
     
     func present() {
@@ -196,21 +154,18 @@ class RemainderView : UIView {
     func containerViewPerfectHeight() -> CGFloat {
         let containerWidth = containerView.frame.width
         
-        let addRemainderTitleHeight = addRemainderTitleLabel.text!.size(withMaximumWidth: containerWidth, font: addRemainderTitleLabel.font).height
+        let addRemainderTitleHeight = (topTitleLabel.text ?? "").size(withMaximumWidth: containerWidth, font: topTitleLabel.font).height
         
-        let titleLabelHeight = titleLabel.text!.size(withMaximumWidth: containerWidth, font: titleLabel.font).height
+        let titleLabelHeight = (titleLabel.text ?? "").size(withMaximumWidth: containerWidth, font: titleLabel.font).height
         let titleTextFieldHeight = "".size(withMaximumWidth: containerWidth, font: titleTextField.font!).height + 10
         
-        let descriptionLabelHeight = descriptionLabel.text!.size(withMaximumWidth: containerWidth, font: descriptionLabel.font!).height
+        let descriptionLabelHeight = (descriptionLabel.text ?? "").size(withMaximumWidth: containerWidth, font: descriptionLabel.font!).height
         let descriptionTextViewHeight = descriptionTextView.text.size(withMaximumWidth: containerWidth - 30, font: descriptionTextView.font!).height + 10
         
-        let cetagoryLabelHeight = cetagoryLabel.text!.size(withMaximumWidth: containerWidth, font: cetagoryLabel.font).height
-        let pickerViewHeight : CGFloat = 70
-        
         let buttonsHeight : CGFloat = 40
-        let spaces : CGFloat = 80
+        let spaces : CGFloat = 70
         
-        let newHeight = addRemainderTitleHeight + titleLabelHeight + titleTextFieldHeight + descriptionLabelHeight + descriptionTextViewHeight + buttonsHeight + spaces + cetagoryLabelHeight + pickerViewHeight
+        let newHeight = addRemainderTitleHeight + titleLabelHeight + titleTextFieldHeight + descriptionLabelHeight + descriptionTextViewHeight + buttonsHeight + spaces
         return newHeight
     }
     
@@ -222,11 +177,11 @@ class RemainderView : UIView {
         let title = titleTextField.text ?? ""
         let validTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
         if !validTitle.isEmpty {
-            let description : String? = !self.descriptionTextView.text.isEmpty ? self.descriptionTextView.text : nil
-            let timestamp = NSDate().timeIntervalSince1970
-            let coordinates = Coordinates(latitude : 0 ,longitude : 0)
-            let remainder : RemainderView.Remainder = (validTitle , description, timestamp , Int16(self.selectedCetagory) , coordinates)
-            self.delegate?.remainderView(self, didAddRemainder: remainder)
+            let description : String? = !(self.descriptionTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)).isEmpty ? self.descriptionTextView.text : nil
+            var alertInfo : Dictionary<String , Any> = [:]
+            alertInfo[titleAlertKey] = title
+            alertInfo[descriptionAlertKey] = description
+            self.delegate?.alertView(self, didAdd: alertInfo)
         }else {
             shakeView(titleLabel)
         }
@@ -251,9 +206,8 @@ class RemainderView : UIView {
     required init?(coder: NSCoder) {
         fatalError()
     }
-}
-
-extension RemainderView : UITextViewDelegate {
+    
+    //MARK:- TextView Delegate
     
     func textViewDidChange(_ textView: UITextView) {
         let newHeight = textView.text.size(withMaximumWidth: containerView.frame.width - 30, font: textView.font!).height + 10
@@ -267,41 +221,16 @@ extension RemainderView : UITextViewDelegate {
         
     }
     
-}
-
-extension RemainderView : UIPickerViewDelegate , UIPickerViewDataSource {
     
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return self.categoriesNames.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return self.categoriesNames[row]
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        self.selectedCetagory = row
-    }
-    
-}
-
-//MARK:- Themed
-
-extension RemainderView : Themed {
+    //MARK: - Themed
     
     func applyTheme(_ theme: Theme) {
         self.containerView.backgroundColor = theme.secondaryBackgroundColor
-        self.addRemainderTitleLabel.textColor = theme.labelColor
+        self.topTitleLabel.textColor = theme.labelColor
         self.titleLabel.textColor = theme.labelColor
         self.titleTextField.textColor = theme.labelColor
         self.descriptionLabel.textColor = theme.labelColor
         self.descriptionTextView.textColor = theme.labelColor
-        self.cetagoryLabel.textColor = theme.labelColor
-        self.cetagoryPickerView.tintColor = theme.labelColor
         
         addButton.setTitleColor(theme.appTintColor, for: .normal)
         cancelButton.setTitleColor(theme.appTintColor, for: .normal)
@@ -312,5 +241,6 @@ extension RemainderView : Themed {
         titleTextField.layer.borderColor = theme.tertiaryLabelColor.cgColor
         descriptionTextView.layer.borderColor = theme.tertiaryLabelColor.cgColor
     }
-    
 }
+
+
