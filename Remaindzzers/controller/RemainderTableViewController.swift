@@ -127,6 +127,28 @@ extension RemainderTableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let action = UIContextualAction(style: .destructive, title: "Delete") { [weak self] (action, view, complitionHandler) in
+            guard let self = self else {return}
+            print(indexPath.row)
+            let category = Array(self.remainders.keys)[indexPath.section]
+            let expandableRemainder = self.remainders[category]![indexPath.row]
+            
+            
+            self.context.delete(expandableRemainder.remainder)
+            do {
+                try self.context.save()
+                self.remainders[category]?.remove(at: indexPath.row)
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }catch {
+                print(error)
+            }
+        }
+        return UISwipeActionsConfiguration(actions: [action])
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let key = Array(remainders.keys)[indexPath.section]
         remainders[key]![indexPath.row].expanded = !(remainders[key]![indexPath.row].expanded)
