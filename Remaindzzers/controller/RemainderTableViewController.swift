@@ -8,6 +8,8 @@
 
 import UIKit
 
+
+
 class RemainderTableViewController : UITableViewController {
     
     typealias ExpandableRemainder = (remainder :Remainder , expanded :Bool)
@@ -26,6 +28,7 @@ class RemainderTableViewController : UITableViewController {
     fileprivate func setupTableView() {
         tableView.separatorStyle = .none
         tableView.register(RemainderTableViewCell.self, forCellReuseIdentifier: RemainderTableViewCell.cellID)
+        tableView.register(CategoryTableHeaderView.self, forHeaderFooterViewReuseIdentifier: "header")
         
         fetchRemainders()
     }
@@ -33,7 +36,7 @@ class RemainderTableViewController : UITableViewController {
     fileprivate func setupNavigationITem() {
         navigationItem.title = "Remaindzzers"
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addRemainder))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Map", style: .done, target: self, action: #selector(mapTapped))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "location_nav"), style: .done, target: self, action: #selector(mapTapped))
     }
     
     @objc func addRemainder() {
@@ -68,6 +71,28 @@ class RemainderTableViewController : UITableViewController {
         }
     }
     
+    func formatedDateString(from timestamp : Double) -> String {
+        let date = NSDate(timeIntervalSince1970: timestamp)
+        
+        let calendar = Calendar.current
+
+        // Replace the hour (time) of both dates with 00:00
+        let date1 = calendar.startOfDay(for: date as Date)
+        let date2 = calendar.startOfDay(for: Date())
+
+        let dateFormatter = DateFormatter()
+        let components = calendar.dateComponents([.day], from: date1, to: date2)
+        
+        if let days = components.day , days > 0{
+            dateFormatter.dateStyle = .short
+            dateFormatter.timeStyle = .none
+        }else {
+            dateFormatter.dateStyle = .none
+            dateFormatter.timeStyle = .short
+        }
+        return dateFormatter.string(from: date as Date)
+    }
+    
     required init?(coder: NSCoder) {
         fatalError()
     }
@@ -92,29 +117,7 @@ extension RemainderTableViewController {
         let expandableRemainder = self.remainders[category]![indexPath.row]
 
         cell.textLabel?.text = expandableRemainder.remainder.title
-        
-        // set up date formating
-        
-        let date = NSDate(timeIntervalSince1970: expandableRemainder.remainder.timestamp)
-        
-        let calendar = Calendar.current
-
-        // Replace the hour (time) of both dates with 00:00
-        let date1 = calendar.startOfDay(for: date as Date)
-        let date2 = calendar.startOfDay(for: Date())
-
-        let dateFormatter = DateFormatter()
-        let components = calendar.dateComponents([.day], from: date1, to: date2)
-        
-        if let days = components.day , days > 0{
-            dateFormatter.dateStyle = .short
-            dateFormatter.timeStyle = .none
-        }else {
-            dateFormatter.dateStyle = .none
-            dateFormatter.timeStyle = .short
-        }
-        
-        cell.timestampLabel.text = dateFormatter.string(from: date as Date)
+        cell.timestampLabel.text = self.formatedDateString(from : expandableRemainder.remainder.timestamp)
         
         if expandableRemainder.expanded , let description  = expandableRemainder.remainder.remainderDescription{
             cell.detailTextLabel?.text = description
@@ -139,6 +142,9 @@ extension RemainderTableViewController {
             do {
                 try self.context.save()
                 self.remainders[category]?.remove(at: indexPath.row)
+                if self.remainders[category]!.count < 1 {
+                    self.remainders[category] = nil
+                }
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
@@ -149,6 +155,20 @@ extension RemainderTableViewController {
         return UISwipeActionsConfiguration(actions: [action])
     }
     
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "header") as! CategoryTableHeaderView
+        let category = Array(remainders.keys)[section]
+        let image = RemainderCategory.caregory(from: category).image
+        view.catagoryImageView.image = image
+        return view
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 30
+    }
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        view.tintColor = themeManager.currentTheme.secondaryBackgroundColor
+    }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let key = Array(remainders.keys)[indexPath.section]
         remainders[key]![indexPath.row].expanded = !(remainders[key]![indexPath.row].expanded)
@@ -201,5 +221,29 @@ extension RemainderTableViewController : Themed {
     
     func applyTheme(_ theme: Theme) {
         tableView.backgroundColor = theme.backgroundColor
+    }
+}
+
+
+class CategoryTableHeaderView : UITableViewHeaderFooterView {
+    
+    var catagoryImageView : UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
+        setupViews()
+    }
+    
+    func setupViews() {
+        self.addSubview(catagoryImageView)
+        catagoryImageView.setConstraints(leadingAnchor, 10, topAnchor, 5 , nil , 20 , bottomAnchor , -5)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError()
     }
 }

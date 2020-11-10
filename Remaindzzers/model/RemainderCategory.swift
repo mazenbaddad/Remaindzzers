@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum RemainderCategory: Int16 {
     
@@ -15,9 +16,8 @@ enum RemainderCategory: Int16 {
     case grocery = 1
     case bakery = 2
     case butchery = 3
-    case freshStore = 4
-    case planetShop = 5
-    case custom = 6
+    case plantShop = 4
+    case custom = 5
     
     static func caregory(from rawValue : Int16) -> RemainderCategory {
         switch rawValue {
@@ -29,12 +29,27 @@ enum RemainderCategory: Int16 {
             return .bakery
         case 3 :
             return . butchery
-        case 4 :
-            return .freshStore
-        case 5:
-            return .planetShop
+        case 4:
+            return .plantShop
         default:
             return .custom
+        }
+    }
+    
+    var image : UIImage? {
+        switch self {
+        case .pharmacy :
+            return UIImage(named:"pharmacy")
+        case .grocery:
+            return UIImage(named:"grocery")
+        case .bakery:
+            return UIImage(named:"bakery")
+        case .butchery :
+            return UIImage(named:"butchery")
+        case .plantShop:
+            return UIImage(named:"flower")
+        default:
+            return UIImage(named:"location")
         }
     }
 }
