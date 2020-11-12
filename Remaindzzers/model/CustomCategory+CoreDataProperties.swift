@@ -21,5 +21,6 @@ extension CustomCategory {
     @NSManaged public var latitude: Double
     @NSManaged public var longitude: Double
     @NSManaged public var subtitile: String?
+    @NSManaged public var id: String?
 
 }

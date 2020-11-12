@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import CoreData
 
 
 class RemainderTableViewController : UITableViewController {
@@ -23,14 +23,13 @@ class RemainderTableViewController : UITableViewController {
         setupTableView()
         setupNavigationITem()
         setupTheme()
+        fetchRemainders()
     }
     
     fileprivate func setupTableView() {
         tableView.separatorStyle = .none
         tableView.register(RemainderTableViewCell.self, forCellReuseIdentifier: RemainderTableViewCell.cellID)
         tableView.register(CategoryTableHeaderView.self, forHeaderFooterViewReuseIdentifier: "header")
-        
-        fetchRemainders()
     }
     
     fileprivate func setupNavigationITem() {
@@ -46,10 +45,13 @@ class RemainderTableViewController : UITableViewController {
     }
     
     @objc func mapTapped() {
-        present(MapViewController(), animated: true)
+        let mapViewController = MapViewController()
+        mapViewController.delegate = self
+        present(mapViewController, animated: true)
     }
     
     func fetchRemainders() {
+        self.remainders.removeAll()
         do {
             let remainders = try self.context.fetch(Remainder.fetchRequest()) as [Remainder]
             for remainder in remainders {
@@ -199,7 +201,7 @@ extension RemainderTableViewController : AlertViewDelegate {
             remainder.timestamp = timestamp
             remainder.latitude = latitude
             remainder.longitude = longitude
-            
+            print("remainder , latitiude:\(latitude) , longitude:\(longitude)")
             do {
                 try self.context.save()
                 self.append(remainder: remainder)
@@ -215,35 +217,17 @@ extension RemainderTableViewController : AlertViewDelegate {
     
 }
 
+extension RemainderTableViewController : MapViewControllerDelegate {
+    func mapViewControllerDidUpdateRemainders() {
+        self.fetchRemainders()
+    }
+}
+
 //MARK:- Themed
 
 extension RemainderTableViewController : Themed {
     
     func applyTheme(_ theme: Theme) {
         tableView.backgroundColor = theme.backgroundColor
-    }
-}
-
-
-class CategoryTableHeaderView : UITableViewHeaderFooterView {
-    
-    var catagoryImageView : UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        return imageView
-    }()
-    
-    override init(reuseIdentifier: String?) {
-        super.init(reuseIdentifier: reuseIdentifier)
-        setupViews()
-    }
-    
-    func setupViews() {
-        self.addSubview(catagoryImageView)
-        catagoryImageView.setConstraints(leadingAnchor, 10, topAnchor, 5 , nil , 20 , bottomAnchor , -5)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError()
     }
 }

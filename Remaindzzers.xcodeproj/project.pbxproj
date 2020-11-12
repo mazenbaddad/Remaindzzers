@@ -8,10 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		AF359B2F255758060054C843 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF359B2E255758060054C843 /* MapViewController.swift */; };
-		AF359B36255781FF0054C843 /* CustomCategory+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF359B34255781FF0054C843 /* CustomCategory+CoreDataClass.swift */; };
-		AF359B37255781FF0054C843 /* CustomCategory+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF359B35255781FF0054C843 /* CustomCategory+CoreDataProperties.swift */; };
 		AF359B39255792530054C843 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF359B38255792530054C843 /* AlertView.swift */; };
 		AF600DB425508ABB0037403E /* RemainderAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF600DB325508ABB0037403E /* RemainderAlertView.swift */; };
+		AF69E8BA255C209900F81702 /* Remainder+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF69E8B6255C209900F81702 /* Remainder+CoreDataClass.swift */; };
+		AF69E8BB255C209900F81702 /* Remainder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF69E8B7255C209900F81702 /* Remainder+CoreDataProperties.swift */; };
+		AF69E8BC255C209900F81702 /* CustomCategory+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF69E8B8255C209900F81702 /* CustomCategory+CoreDataClass.swift */; };
+		AF69E8BD255C209900F81702 /* CustomCategory+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF69E8B9255C209900F81702 /* CustomCategory+CoreDataProperties.swift */; };
+		AF69E8BF255C364400F81702 /* CategoryTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF69E8BE255C364400F81702 /* CategoryTableHeaderView.swift */; };
 		AFC70F2E254E0A1600EA0C89 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC70F2D254E0A1600EA0C89 /* AppDelegate.swift */; };
 		AFC70F30254E0A1600EA0C89 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC70F2F254E0A1600EA0C89 /* SceneDelegate.swift */; };
 		AFC70F38254E0A1600EA0C89 /* Remaindzzers.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AFC70F36254E0A1600EA0C89 /* Remaindzzers.xcdatamodeld */; };
@@ -29,16 +32,17 @@
 		AFC70F5D254E37EB00EA0C89 /* String-extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC70F5C254E37EA00EA0C89 /* String-extension.swift */; };
 		AFC70F5F254F56BB00EA0C89 /* Coordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC70F5E254F56BB00EA0C89 /* Coordinates.swift */; };
 		AFC70F63254F617800EA0C89 /* RemainderCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC70F62254F617800EA0C89 /* RemainderCategory.swift */; };
-		AFFFE5592553884700F7391D /* Remainder+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFFFE5572553884700F7391D /* Remainder+CoreDataClass.swift */; };
-		AFFFE55A2553884700F7391D /* Remainder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFFFE5582553884700F7391D /* Remainder+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		AF359B2E255758060054C843 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		AF359B34255781FF0054C843 /* CustomCategory+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomCategory+CoreDataClass.swift"; sourceTree = "<group>"; };
-		AF359B35255781FF0054C843 /* CustomCategory+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomCategory+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		AF359B38255792530054C843 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		AF600DB325508ABB0037403E /* RemainderAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainderAlertView.swift; sourceTree = "<group>"; };
+		AF69E8B6255C209900F81702 /* Remainder+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Remainder+CoreDataClass.swift"; sourceTree = "<group>"; };
+		AF69E8B7255C209900F81702 /* Remainder+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Remainder+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		AF69E8B8255C209900F81702 /* CustomCategory+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomCategory+CoreDataClass.swift"; sourceTree = "<group>"; };
+		AF69E8B9255C209900F81702 /* CustomCategory+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomCategory+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		AF69E8BE255C364400F81702 /* CategoryTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableHeaderView.swift; sourceTree = "<group>"; };
 		AFC70F2A254E0A1600EA0C89 /* Remaindzzers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Remaindzzers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFC70F2D254E0A1600EA0C89 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AFC70F2F254E0A1600EA0C89 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -58,8 +62,6 @@
 		AFC70F5C254E37EA00EA0C89 /* String-extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String-extension.swift"; sourceTree = "<group>"; };
 		AFC70F5E254F56BB00EA0C89 /* Coordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinates.swift; sourceTree = "<group>"; };
 		AFC70F62254F617800EA0C89 /* RemainderCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainderCategory.swift; sourceTree = "<group>"; };
-		AFFFE5572553884700F7391D /* Remainder+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Remainder+CoreDataClass.swift"; sourceTree = "<group>"; };
-		AFFFE5582553884700F7391D /* Remainder+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Remainder+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,10 +109,10 @@
 		AFC70F44254E0D9900EA0C89 /* model */ = {
 			isa = PBXGroup;
 			children = (
-				AFFFE5572553884700F7391D /* Remainder+CoreDataClass.swift */,
-				AFFFE5582553884700F7391D /* Remainder+CoreDataProperties.swift */,
-				AF359B34255781FF0054C843 /* CustomCategory+CoreDataClass.swift */,
-				AF359B35255781FF0054C843 /* CustomCategory+CoreDataProperties.swift */,
+				AF69E8B6255C209900F81702 /* Remainder+CoreDataClass.swift */,
+				AF69E8B7255C209900F81702 /* Remainder+CoreDataProperties.swift */,
+				AF69E8B8255C209900F81702 /* CustomCategory+CoreDataClass.swift */,
+				AF69E8B9255C209900F81702 /* CustomCategory+CoreDataProperties.swift */,
 				AFC70F4F254E0EC400EA0C89 /* Weak.swift */,
 				AFC70F5E254F56BB00EA0C89 /* Coordinates.swift */,
 				AFC70F62254F617800EA0C89 /* RemainderCategory.swift */,
@@ -122,6 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				AFC70F5A254E155F00EA0C89 /* RemainderTableViewCell.swift */,
+				AF69E8BE255C364400F81702 /* CategoryTableHeaderView.swift */,
 				AF359B38255792530054C843 /* AlertView.swift */,
 				AF600DB325508ABB0037403E /* RemainderAlertView.swift */,
 			);
@@ -243,10 +246,10 @@
 				AFC70F54254E0EFB00EA0C89 /* UIView-extension.swift in Sources */,
 				AFC70F5D254E37EB00EA0C89 /* String-extension.swift in Sources */,
 				AF359B39255792530054C843 /* AlertView.swift in Sources */,
-				AFFFE5592553884700F7391D /* Remainder+CoreDataClass.swift in Sources */,
+				AF69E8BA255C209900F81702 /* Remainder+CoreDataClass.swift in Sources */,
 				AFC70F52254E0EEE00EA0C89 /* UIColor-extension.swift in Sources */,
+				AF69E8BF255C364400F81702 /* CategoryTableHeaderView.swift in Sources */,
 				AFC70F4C254E0EB600EA0C89 /* Theme.swift in Sources */,
-				AF359B36255781FF0054C843 /* CustomCategory+CoreDataClass.swift in Sources */,
 				AFC70F4D254E0EB600EA0C89 /* ThemeManager.swift in Sources */,
 				AFC70F63254F617800EA0C89 /* RemainderCategory.swift in Sources */,
 				AF600DB425508ABB0037403E /* RemainderAlertView.swift in Sources */,
@@ -254,13 +257,14 @@
 				AFC70F4E254E0EB600EA0C89 /* Themed.swift in Sources */,
 				AFC70F38254E0A1600EA0C89 /* Remaindzzers.xcdatamodeld in Sources */,
 				AFC70F5F254F56BB00EA0C89 /* Coordinates.swift in Sources */,
-				AF359B37255781FF0054C843 /* CustomCategory+CoreDataProperties.swift in Sources */,
+				AF69E8BC255C209900F81702 /* CustomCategory+CoreDataClass.swift in Sources */,
 				AF359B2F255758060054C843 /* MapViewController.swift in Sources */,
+				AF69E8BB255C209900F81702 /* Remainder+CoreDataProperties.swift in Sources */,
 				AFC70F50254E0EC400EA0C89 /* Weak.swift in Sources */,
 				AFC70F5B254E155F00EA0C89 /* RemainderTableViewCell.swift in Sources */,
 				AFC70F59254E104800EA0C89 /* RemainderTableViewController.swift in Sources */,
+				AF69E8BD255C209900F81702 /* CustomCategory+CoreDataProperties.swift in Sources */,
 				AFC70F57254E101500EA0C89 /* RNavigationController.swift in Sources */,
-				AFFFE55A2553884700F7391D /* Remainder+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

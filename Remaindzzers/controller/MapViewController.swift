@@ -8,9 +8,16 @@
 
 import UIKit
 import MapKit
+import CoreData
 import CoreLocation
 
+protocol MapViewControllerDelegate : class {
+    func mapViewControllerDidUpdateRemainders()
+}
+
 class MapViewController : UIViewController {
+    
+    weak var delegate : MapViewControllerDelegate?
     
     var mapView = MKMapView()
     var locationManager = CLLocationManager()
@@ -115,9 +122,36 @@ class MapViewController : UIViewController {
                 && $0.latitude == selectedAnnotation.annotation?.coordinate.latitude
                 && $0.longitude == selectedAnnotation.annotation?.coordinate.longitude}).first {
                 
+                let location = CLLocationCoordinate2D(latitude: customCategory.latitude, longitude: customCategory.longitude)
+                
+                /// delete all remainder associated with this location
+                do {
+                    let remainders = try context.fetch(Remainder.fetchRequest()) as Array<Remainder>
+                    for remainder in remainders where remainder.latitude == location.latitude && remainder.longitude == location.longitude{
+                        context.delete(remainder)
+                    }
+                }catch {
+                    print(error)
+                }
+                
+                // stop monitoring for the custom location
+                if let id = customCategory.id {
+                    print(id)
+                    let region = CLCircularRegion(center: location, radius: 10, identifier: id)
+                    region.notifyOnExit = false
+                    CLLocationManager().stopMonitoring(for: region)
+                }
+                
+                // delete the custom location
                 context.delete(customCategory)
-                try? context.save()
-                self.fetchCustomCategories()
+                do {
+                    // save changes and refetch the categories
+                    try context.save()
+                    self.fetchCustomCategories()
+                    self.delegate?.mapViewControllerDidUpdateRemainders()
+                }catch {
+                    print(error)
+                }
             }
             
         }
@@ -158,13 +192,19 @@ extension MapViewController : AlertViewDelegate {
     func alertView(_ alertView: AlertView, didAdd alertInfo: Dictionary<String, Any>) {
         guard let location = self.selectedLocation else {return}
         let customCategory = CustomCategory(context: context)
+        let uid = ("\(5)\(NSUUID().uuidString)")
         customCategory.title = alertInfo[alertView.titleAlertKey] as? String
         customCategory.subtitile = alertInfo[alertView.descriptionAlertKey] as? String
         customCategory.latitude = location.latitude
         customCategory.longitude = location.longitude
+        customCategory.id = uid
+        print("location:\(location)")
         do {
             try context.save()
             self.fetchCustomCategories()
+            let region = CLCircularRegion(center: location, radius: 10, identifier: uid)
+            region.notifyOnExit = false
+            CLLocationManager().startMonitoring(for: region)
         }catch {
             print(error)
         }

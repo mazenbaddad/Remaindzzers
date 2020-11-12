@@ -9,17 +9,20 @@
 import UIKit
 import CoreData
 import CoreLocation
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var locationManager = CLLocationManager()
+    let nofificationCenter = UNUserNotificationCenter.current()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
         checkLocationAuth()
+        authorizeUserNotification() 
         
         window = UIWindow(frame:UIScreen.main.bounds)
         window?.makeKeyAndVisible()
@@ -65,7 +68,62 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
         locationManager.allowsBackgroundLocationUpdates = true
+        
+        
+        // monitoring existing locations
+        let locations = RemainderCategory.locations
+        for (index , location)in locations.enumerated() {
+            
+            let id = "\(location.0.rawValue)\(index)"
+            let region = CLCircularRegion(center: CLLocationCoordinate2D(latitude: location.1.latitude, longitude: location.1.longitude), radius: 10, identifier: id)
+            region.notifyOnExit = false
+            self.locationManager.startMonitoring(for: region)
+        }
+
     }
+    
+    
+    //MARK:- User Notification
+    
+    func authorizeUserNotification() {
+        let options : UNAuthorizationOptions = [.alert , .sound]
+        nofificationCenter.requestAuthorization(options: options) { (_, _) in }
+        nofificationCenter.delegate = self
+    }
+    
+    func addNotification(for remainders : Array<Remainder> ,with category : String ) {
+        if remainders.count == 1 {
+            let remainder = remainders.first!
+            let remainderDescription = remainder.remainderDescription != nil ? "\n\(remainder.remainderDescription!)" : ""
+            let title = "Your are close from a \(category)"
+            let body = "You have a remainder for \(remainders.first!.title!) \(remainderDescription)"
+            self.addNotification(with: title, body: body)
+        }else if remainders.count > 1 {
+            let title = "Your are close from a \(category)"
+            var body = "You have a remainder for"
+            for remainder in remainders where remainder.title != nil{
+                body += " , \(remainder.title!)"
+            }
+            self.addNotification(with: title, body: body)
+        }
+    }
+    
+    func addNotification(with title : String , body : String) {
+        let content = UNMutableNotificationContent()
+        content.title = title
+        content.body = body
+        content.sound = .default
+        
+        let date = Date(timeIntervalSinceNow: 1)
+        let dateComponent = Calendar.current.dateComponents([.year , .month , .day , .hour ,.minute , .second], from: date)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponent, repeats: false)
+        
+        
+        let request = UNNotificationRequest(identifier: "content", content: content, trigger: trigger)
+        nofificationCenter.add(request) { (_) in}
+    }
+    
+    
     
     // MARK: - Core Data stack
 
@@ -116,11 +174,61 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate : CLLocationManagerDelegate {
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-    }
-    
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         checkLocationAuth()
+    }
+    func locationManager(_ manager: CLLocationManager, monitoringDidFailFor region: CLRegion?, withError error: Error) {
+        print(error)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
+        if let chatCategory = region.identifier.first , let intCategory = Int(String(chatCategory)) , let circularRegion = region as? CLCircularRegion{
+            print(region.identifier)
+            print(circularRegion.center)
+            let categoryRawValue = Int16(intCategory)
+            if categoryRawValue <= 4 {
+                // default categories
+                print("default")
+                let categories = ["pharmacy","grocery","bakery","butchery","plantShop"]
+                let category = categories[intCategory]
+                do {
+                    let request = Remainder.fetchRequest() as NSFetchRequest<Remainder>
+                    request.predicate = NSPredicate(format: "category == %i", categoryRawValue)
+                    let remainders = try persistentContainer.viewContext.fetch(request)
+                    self.addNotification(for: remainders, with: category)
+                }catch {
+                    print(error)
+                }
+                
+            }else {
+                // custom category
+                print("custom")
+                do {
+                    let request = Remainder.fetchRequest() as NSFetchRequest
+                    request.predicate = NSPredicate(format: "latitude == %lf And longitude == %lf" , circularRegion.center.latitude , circularRegion.center.longitude)
+                    let remainders = try persistentContainer.viewContext.fetch(request)
+                    print("count:\(remainders.count)")
+                    do {
+                        let request = CustomCategory.fetchRequest() as NSFetchRequest
+                        request.predicate = NSPredicate(format: "id == %@" , region.identifier)
+                        let categories = try persistentContainer.viewContext.fetch(request)
+                        if let category = categories.first , let title = category.title {
+                            print("title")
+                            self.addNotification(for: remainders, with: title)
+                        }else {
+                            print("no title")
+                        }
+                    }
+                }catch {
+                    print(error)
+                }
+            }
+        }
+    }
+}
+
+extension AppDelegate : UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert, .badge, .sound])
     }
 }

@@ -52,4 +52,12 @@ enum RemainderCategory: Int16 {
             return UIImage(named:"location")
         }
     }
+    
+    static var locations : [(RemainderCategory , Coordinates)] {
+        return [(.pharmacy , Coordinates(latitude: 32.000000000, longitude: 32.000000000)) , (.pharmacy , Coordinates(latitude: 33.000000000, longitude: 33.000000000)) ,
+                (.grocery , Coordinates(latitude: 32.111111111, longitude: 32.111111111)) , (.grocery , Coordinates(latitude: 33.111111111, longitude: 33.111111111)) ,
+                (.bakery , Coordinates(latitude: 32.222222222, longitude: 32.222222222)) , (.bakery , Coordinates(latitude: 33.222222222, longitude: 33.222222222)) ,
+                (.butchery , Coordinates(latitude: 32.333333333, longitude: 32.333333333)) , (.butchery , Coordinates(latitude: 33.333333333, longitude: 33.333333333)) ,
+                (.plantShop , Coordinates(latitude: 32.444444444, longitude: 32.444444444)) , (.plantShop , Coordinates(latitude: 33.444444444, longitude: 33.444444444)) ,]
+    }
 }
