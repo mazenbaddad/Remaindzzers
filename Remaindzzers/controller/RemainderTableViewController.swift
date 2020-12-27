@@ -160,7 +160,7 @@ extension RemainderTableViewController {
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "header") as! CategoryTableHeaderView
         let category = Array(remainders.keys)[section]
-        let image = RemainderCategory.caregory(from: category).image
+        let image = RemainderCategory.category(from: category).image
         view.catagoryImageView.image = image
         return view
     }

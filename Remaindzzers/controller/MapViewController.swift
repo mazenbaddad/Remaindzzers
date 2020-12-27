@@ -198,7 +198,8 @@ extension MapViewController : AlertViewDelegate {
         customCategory.latitude = location.latitude
         customCategory.longitude = location.longitude
         customCategory.id = uid
-        print("location:\(location)")
+        
+        print("location: latitude \(location.latitude), longitude \(location.longitude) for :" , customCategory.title!)
         do {
             try context.save()
             self.fetchCustomCategories()

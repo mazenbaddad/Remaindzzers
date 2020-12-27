@@ -8,9 +8,9 @@
 
 import Foundation
 import UIKit
+import CoreLocation
 
 enum RemainderCategory: Int16 {
-    
     
     case pharmacy = 0
     case grocery = 1
@@ -19,7 +19,7 @@ enum RemainderCategory: Int16 {
     case plantShop = 4
     case custom = 5
     
-    static func caregory(from rawValue : Int16) -> RemainderCategory {
+    static func category(from rawValue : Int16) -> RemainderCategory {
         switch rawValue {
         case 0 :
             return .pharmacy
@@ -53,11 +53,16 @@ enum RemainderCategory: Int16 {
         }
     }
     
-    static var locations : [(RemainderCategory , Coordinates)] {
-        return [(.pharmacy , Coordinates(latitude: 32.000000000, longitude: 32.000000000)) , (.pharmacy , Coordinates(latitude: 33.000000000, longitude: 33.000000000)) ,
-                (.grocery , Coordinates(latitude: 32.111111111, longitude: 32.111111111)) , (.grocery , Coordinates(latitude: 33.111111111, longitude: 33.111111111)) ,
-                (.bakery , Coordinates(latitude: 32.222222222, longitude: 32.222222222)) , (.bakery , Coordinates(latitude: 33.222222222, longitude: 33.222222222)) ,
-                (.butchery , Coordinates(latitude: 32.333333333, longitude: 32.333333333)) , (.butchery , Coordinates(latitude: 33.333333333, longitude: 33.333333333)) ,
-                (.plantShop , Coordinates(latitude: 32.444444444, longitude: 32.444444444)) , (.plantShop , Coordinates(latitude: 33.444444444, longitude: 33.444444444)) ,]
+    static var locations : [(category : RemainderCategory , coordinates :CLLocationCoordinate2D)] {
+        return [(.pharmacy , CLLocationCoordinate2D(latitude: 32.000000000, longitude: 32.000000000)) ,
+                (.pharmacy , CLLocationCoordinate2D(latitude: 33.000000000, longitude: 33.000000000)) ,
+                (.grocery , CLLocationCoordinate2D(latitude: 32.111111111, longitude: 32.111111111)) ,
+                (.grocery , CLLocationCoordinate2D(latitude: 33.111111111, longitude: 33.111111111)) ,
+                (.bakery , CLLocationCoordinate2D(latitude: 32.222222222, longitude: 32.222222222)) ,
+                (.bakery , CLLocationCoordinate2D(latitude: 33.222222222, longitude: 33.222222222)) ,
+                (.butchery , CLLocationCoordinate2D(latitude: 32.333333333, longitude: 32.333333333)) ,
+                (.butchery , CLLocationCoordinate2D(latitude: 33.333333333, longitude: 33.333333333)) ,
+                (.plantShop , CLLocationCoordinate2D(latitude: 32.444444444, longitude: 32.444444444)) ,
+                (.plantShop , CLLocationCoordinate2D(latitude: 33.444444444, longitude: 33.444444444)) ,]
     }
 }

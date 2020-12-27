@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class RemainderAlertView : AlertView {
     
@@ -16,7 +17,7 @@ class RemainderAlertView : AlertView {
     let categoryAlertKey: String = "categoryAlertKey"
     
     
-    typealias Category = (name : String, coordinates : Coordinates)
+    typealias Category = (name : String, coordinates : CLLocationCoordinate2D)
     var categories : Array<Category> = []
     var selectedCategory : Int = 0
     
@@ -52,13 +53,13 @@ class RemainderAlertView : AlertView {
     }
     
     func setupCategories() {
-        let zeroCoordinates = Coordinates(latitude: 0, longitude: 0)
+        let zeroCoordinates = CLLocationCoordinate2D(latitude: 0, longitude: 0)
         self.categories = [("Pharmacy" , zeroCoordinates),("Grocery", zeroCoordinates) ,("Bakery" , zeroCoordinates) ,("Butchery" , zeroCoordinates) , ("Plant shop" , zeroCoordinates)]
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         do {
             let customCategories = try context.fetch(CustomCategory.fetchRequest()) as [CustomCategory]
             for category in customCategories where category.title != nil{
-                self.categories.append((category.title! , Coordinates(latitude: category.latitude, longitude: category.longitude)))
+                self.categories.append((category.title! , CLLocationCoordinate2D(latitude: category.latitude, longitude: category.longitude)))
             }
         }catch {
             print(error)

@@ -32,7 +32,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let remainderTableViewController = RemainderTableViewController(style: .plain)
         let navigationRemainderTableViewController = RNavigationController(rootViewController: remainderTableViewController)
         window?.rootViewController = navigationRemainderTableViewController
-        window?.rootViewController = navigationRemainderTableViewController
         return true
     }
 
@@ -72,10 +71,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // monitoring existing locations
         let locations = RemainderCategory.locations
-        for (index , location)in locations.enumerated() {
+        for (index , location) in locations.enumerated() {
             
-            let id = "\(location.0.rawValue)\(index)"
-            let region = CLCircularRegion(center: CLLocationCoordinate2D(latitude: location.1.latitude, longitude: location.1.longitude), radius: 10, identifier: id)
+            let id = "\(location.category.rawValue)\(index)"
+            let region = CLCircularRegion(center: location.coordinates, radius: 10, identifier: id)
             region.notifyOnExit = false
             self.locationManager.startMonitoring(for: region)
         }
@@ -177,7 +176,9 @@ extension AppDelegate : CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         checkLocationAuth()
     }
+    
     func locationManager(_ manager: CLLocationManager, monitoringDidFailFor region: CLRegion?, withError error: Error) {
+        print("erro monitoring did fail for region")
         print(error)
     }
     
@@ -228,6 +229,7 @@ extension AppDelegate : CLLocationManagerDelegate {
 }
 
 extension AppDelegate : UNUserNotificationCenterDelegate {
+    
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         completionHandler([.alert, .badge, .sound])
     }

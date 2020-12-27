@@ -30,7 +30,6 @@
 		AFC70F59254E104800EA0C89 /* RemainderTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC70F58254E104800EA0C89 /* RemainderTableViewController.swift */; };
 		AFC70F5B254E155F00EA0C89 /* RemainderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC70F5A254E155F00EA0C89 /* RemainderTableViewCell.swift */; };
 		AFC70F5D254E37EB00EA0C89 /* String-extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC70F5C254E37EA00EA0C89 /* String-extension.swift */; };
-		AFC70F5F254F56BB00EA0C89 /* Coordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC70F5E254F56BB00EA0C89 /* Coordinates.swift */; };
 		AFC70F63254F617800EA0C89 /* RemainderCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC70F62254F617800EA0C89 /* RemainderCategory.swift */; };
 /* End PBXBuildFile section */
 
@@ -60,7 +59,6 @@
 		AFC70F58254E104800EA0C89 /* RemainderTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainderTableViewController.swift; sourceTree = "<group>"; };
 		AFC70F5A254E155F00EA0C89 /* RemainderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainderTableViewCell.swift; sourceTree = "<group>"; };
 		AFC70F5C254E37EA00EA0C89 /* String-extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String-extension.swift"; sourceTree = "<group>"; };
-		AFC70F5E254F56BB00EA0C89 /* Coordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinates.swift; sourceTree = "<group>"; };
 		AFC70F62254F617800EA0C89 /* RemainderCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainderCategory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -114,7 +112,6 @@
 				AF69E8B8255C209900F81702 /* CustomCategory+CoreDataClass.swift */,
 				AF69E8B9255C209900F81702 /* CustomCategory+CoreDataProperties.swift */,
 				AFC70F4F254E0EC400EA0C89 /* Weak.swift */,
-				AFC70F5E254F56BB00EA0C89 /* Coordinates.swift */,
 				AFC70F62254F617800EA0C89 /* RemainderCategory.swift */,
 			);
 			path = model;
@@ -256,7 +253,6 @@
 				AFC70F30254E0A1600EA0C89 /* SceneDelegate.swift in Sources */,
 				AFC70F4E254E0EB600EA0C89 /* Themed.swift in Sources */,
 				AFC70F38254E0A1600EA0C89 /* Remaindzzers.xcdatamodeld in Sources */,
-				AFC70F5F254F56BB00EA0C89 /* Coordinates.swift in Sources */,
 				AF69E8BC255C209900F81702 /* CustomCategory+CoreDataClass.swift in Sources */,
 				AF359B2F255758060054C843 /* MapViewController.swift in Sources */,
 				AF69E8BB255C209900F81702 /* Remainder+CoreDataProperties.swift in Sources */,
@@ -408,7 +404,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mazenbaddad.remaindzzers.Remaindzzers;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mazenbaddad.remaindzzers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -427,7 +423,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mazenbaddad.remaindzzers.Remaindzzers;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mazenbaddad.remaindzzers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
